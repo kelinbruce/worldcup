@@ -13,7 +13,7 @@ App({
       return
     }
     wx.cloud.init({
-      env: 'YOUR_ENV_ID',
+      env: 'cloud1-d7gcq7de67f18291b',
       traceUser: true,
     })
     this.checkLogin()

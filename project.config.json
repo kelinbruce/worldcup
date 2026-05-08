@@ -1,5 +1,5 @@
 {
-  "appid": "YOUR_APPID_HERE",
+  "appid": "wx0ebc2b4719ea5d8d",
   "projectname": "worldcup-prediction",
   "description": "球友竞猜 - 世界杯竞猜小程序",
   "miniprogramRoot": "miniprogram/",
@@ -32,9 +32,26 @@
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
-    "useIsolateContext": true
+    "useIsolateContext": true,
+    "compileWorklet": false,
+    "localPlugins": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
   },
   "compileType": "miniprogram",
   "libVersion": "3.2.4",
-  "condition": {}
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {}
 }
