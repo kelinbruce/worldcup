@@ -43,14 +43,15 @@ Page({
   },
 
   onLogin() {
-    wx.getUserProfile({
-      desc: '用于完善竞猜档案',
-      success: () => {
-        app.doLogin().then(() => {
-          this.setData({ isLoggedIn: true })
-          this.loadData()
-        }).catch(() => showToast('登录失败'))
-      },
+    wx.showLoading({ title: '登录中...', mask: true })
+    app.doLogin().then(() => {
+      wx.hideLoading()
+      this.setData({ isLoggedIn: true, userInfo: app.globalData.userInfo })
+      this.loadData()
+    }).catch(err => {
+      wx.hideLoading()
+      console.error('登录失败:', err)
+      showToast('登录失败，请重试')
     })
   },
 

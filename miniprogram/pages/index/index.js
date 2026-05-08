@@ -69,17 +69,16 @@ Page({
   },
 
   onLogin() {
-    wx.getUserProfile({
-      desc: '用于完善竞猜档案',
-      success: profileRes => {
-        const { nickName, avatarUrl } = profileRes.userInfo
-        app.doLogin().then(res => {
-          this.setData({ isLoggedIn: true })
-          showToast('登录成功')
-          this.loadData()
-        }).catch(() => showToast('登录失败，请重试'))
-      },
-      fail: () => showToast('需要授权才能参与竞猜'),
+    wx.showLoading({ title: '登录中...', mask: true })
+    app.doLogin().then(() => {
+      wx.hideLoading()
+      this.setData({ isLoggedIn: true, userInfo: app.globalData.userInfo })
+      showToast('登录成功', 'success')
+      this.loadData()
+    }).catch(err => {
+      wx.hideLoading()
+      console.error('登录失败:', err)
+      showToast('登录失败，请重试')
     })
   },
 
