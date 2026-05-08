@@ -32,17 +32,18 @@ App({
   // 登录并拉取用户信息，返回 Promise
   doLogin() {
     return api.login().then(result => {
+      console.log('云函数login返回:', JSON.stringify(result))
       if (result && result.openId) {
         this.globalData.openId = result.openId
         this.globalData.isLoggedIn = true
         wx.setStorageSync('openId', result.openId)
-        if (result.userInfo) {
-          this.globalData.userInfo = result.userInfo
-          wx.setStorageSync('userInfo', result.userInfo)
-        }
+        const userInfo = result.userInfo || { userId: result.openId, nickname: '球友', avatarUrl: '', totalScore: 0 }
+        this.globalData.userInfo = userInfo
+        wx.setStorageSync('userInfo', userInfo)
         return result
       }
-      throw new Error('登录失败')
+      console.error('login result无效:', JSON.stringify(result))
+      throw new Error(result && result.error ? result.error : '登录失败，请检查云函数是否已上传')
     })
   },
 
