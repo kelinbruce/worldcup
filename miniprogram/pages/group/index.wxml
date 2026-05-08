@@ -101,27 +101,28 @@
     <view class="card">
       <view class="card-title">群排行榜</view>
       <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
-      <view
-        wx:else
-        wx:for="{{groupLeaderboard}}"
-        wx:key="userId"
-        class="rank-row flex-between {{item.isMe ? 'is-me' : ''}}"
-      >
-        <view class="flex items-center">
-          <view class="rank-badge {{item.rank <= 3 ? 'top' : ''}}">
-            <text wx:if="{{item.rank === 1}}">🥇</text>
-            <text wx:elif="{{item.rank === 2}}">🥈</text>
-            <text wx:elif="{{item.rank === 3}}">🥉</text>
-            <text wx:else>{{item.rank}}</text>
+      <block wx:else>
+        <view
+          wx:for="{{groupLeaderboard}}"
+          wx:key="userId"
+          class="rank-row flex-between {{item.isMe ? 'is-me' : ''}}"
+        >
+          <view class="flex items-center">
+            <view class="rank-badge {{item.rank <= 3 ? 'top' : ''}}">
+              <text wx:if="{{item.rank === 1}}">🥇</text>
+              <text wx:elif="{{item.rank === 2}}">🥈</text>
+              <text wx:elif="{{item.rank === 3}}">🥉</text>
+              <text wx:else>{{item.rank}}</text>
+            </view>
+            <image class="avatar-sm" src="{{item.avatarUrl}}" mode="aspectFill"/>
+            <view class="rank-info">
+              <view class="rank-name">{{item.nickname}}</view>
+              <view class="rank-rate">正确率 {{item.rateText}}</view>
+            </view>
           </view>
-          <image class="avatar-sm" src="{{item.avatarUrl}}" mode="aspectFill"/>
-          <view class="rank-info">
-            <view class="rank-name">{{item.nickname}}</view>
-            <view class="rank-rate">正确率 {{item.rateText}}</view>
-          </view>
+          <view class="rank-score">{{item.totalScore}} <text class="score-unit">分</text></view>
         </view>
-        <view class="rank-score">{{item.totalScore}} <text class="score-unit">分</text></view>
-      </view>
+      </block>
     </view>
   </block>
 
