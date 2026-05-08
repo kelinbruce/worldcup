@@ -29,20 +29,21 @@
       <view class="empty-hint">创建群组或通过好友邀请加入</view>
     </view>
 
-    <view
-      wx:else
-      wx:for="{{myGroups}}"
-      wx:key="groupId"
-      class="card group-card flex-between"
-      data-groupid="{{item.groupId}}"
-      bindtap="enterGroup"
-    >
-      <view>
-        <view class="group-name">{{item.name}}</view>
-        <view class="group-meta">{{item.memberCount}}人 · 整体正确率 {{item.totalCorrectRate}}%</view>
+    <block wx:else>
+      <view
+        wx:for="{{myGroups}}"
+        wx:key="groupId"
+        class="card group-card flex-between"
+        data-groupid="{{item.groupId}}"
+        bindtap="enterGroup"
+      >
+        <view>
+          <view class="group-name">{{item.name}}</view>
+          <view class="group-meta">{{item.memberCount}}人 · 整体正确率 {{item.totalCorrectRate}}%</view>
+        </view>
+        <view class="group-arrow">></view>
       </view>
-      <view class="group-arrow">></view>
-    </view>
+    </block>
   </block>
 
   <!-- 群组详情视图 -->

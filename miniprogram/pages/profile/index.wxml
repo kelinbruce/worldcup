@@ -99,27 +99,28 @@
         <view class="empty-icon">📋</view>
         <view class="empty-text">暂无历史预测记录</view>
       </view>
-      <view
-        wx:else
-        wx:for="{{historyPredictions}}"
-        wx:key="predictionId"
-        class="card history-row flex-between"
-        data-matchid="{{item.matchId}}"
-        bindtap="goMatchDetail"
-      >
-        <view>
-          <view class="history-teams">
-            {{item.match.homeTeamInfo.flag}} {{item.match.homeTeamInfo.name}}
-            vs
-            {{item.match.awayTeamInfo.flag}} {{item.match.awayTeamInfo.name}}
+      <block wx:else>
+        <view
+          wx:for="{{historyPredictions}}"
+          wx:key="predictionId"
+          class="card history-row flex-between"
+          data-matchid="{{item.matchId}}"
+          bindtap="goMatchDetail"
+        >
+          <view>
+            <view class="history-teams">
+              {{item.match.homeTeamInfo.flag}} {{item.match.homeTeamInfo.name}}
+              vs
+              {{item.match.awayTeamInfo.flag}} {{item.match.awayTeamInfo.name}}
+            </view>
+            <view class="history-meta">{{item.match.timeText}} · {{item.resultText}}</view>
+            <view wx:if="{{item.homeScore !== null}}" class="history-meta">预测比分 {{item.homeScore}}:{{item.awayScore}}</view>
           </view>
-          <view class="history-meta">{{item.match.timeText}} · {{item.resultText}}</view>
-          <view wx:if="{{item.homeScore !== null}}" class="history-meta">预测比分 {{item.homeScore}}:{{item.awayScore}}</view>
+          <view class="history-score {{item.earnedScore > 0 ? 'positive' : ''}}">
+            +{{item.earnedScore || 0}}
+          </view>
         </view>
-        <view class="history-score {{item.earnedScore > 0 ? 'positive' : ''}}">
-          +{{item.earnedScore || 0}}
-        </view>
-      </view>
+      </block>
     </block>
   </block>
 

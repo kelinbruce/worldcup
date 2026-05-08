@@ -55,21 +55,22 @@
       <view class="empty-icon">👥</view>
       <view class="empty-text">暂无好友预测数据</view>
     </view>
-    <view
-      wx:else
-      wx:for="{{friendPicks}}"
-      wx:key="userId"
-      class="friend-pick-row flex-between"
-    >
-      <view class="flex items-center">
-        <image class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"/>
-        <text class="friend-pick-name">{{item.nickname}}</text>
+    <block wx:else>
+      <view
+        wx:for="{{friendPicks}}"
+        wx:key="userId"
+        class="friend-pick-row flex-between"
+      >
+        <view class="flex items-center">
+          <image class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"/>
+          <text class="friend-pick-name">{{item.nickname}}</text>
+        </view>
+        <view class="flex items-center">
+          <text class="friend-flag">{{item.teamFlag}}</text>
+          <text class="friend-team">{{item.teamName}}</text>
+        </view>
       </view>
-      <view class="flex items-center">
-        <text class="friend-flag">{{item.teamFlag}}</text>
-        <text class="friend-team">{{item.teamName}}</text>
-      </view>
-    </view>
+    </block>
   </scroll-view>
 
   <!-- 统计 Tab -->
@@ -78,7 +79,8 @@
       <view class="empty-icon">📊</view>
       <view class="empty-text">暂无统计数据</view>
     </view>
-    <view wx:else wx:for="{{teamStats}}" wx:key="code" class="stats-row">
+    <block wx:else>
+    <view wx:for="{{teamStats}}" wx:key="code" class="stats-row">
       <view class="flex-between items-center" style="margin-bottom:8rpx">
         <view class="flex items-center">
           <text class="stats-flag">{{item.flag}}</text>
@@ -90,6 +92,7 @@
         <view class="progress-fill" style="width:{{item.percent}}%"></view>
       </view>
     </view>
+    </block>
   </scroll-view>
 
 </view>
