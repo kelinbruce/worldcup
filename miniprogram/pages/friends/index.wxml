@@ -1,0 +1,79 @@
+<view class="friends-page">
+
+  <!-- 筛选 Tab -->
+  <view class="filter-bar flex">
+    <view class="filter-item {{filterTab === 'all' ? 'active' : ''}}" data-filter="all" bindtap="switchFilter">全赛程</view>
+    <view class="filter-item {{filterTab === 'group' ? 'active' : ''}}" data-filter="group" bindtap="switchFilter">小组赛</view>
+    <view class="filter-item {{filterTab === 'knockout' ? 'active' : ''}}" data-filter="knockout" bindtap="switchFilter">淘汰赛</view>
+    <view class="filter-item {{filterTab === 'week' ? 'active' : ''}}" data-filter="week" bindtap="switchFilter">本周</view>
+  </view>
+
+  <!-- 我的排名固定栏 -->
+  <view wx:if="{{myRank}}" class="my-rank-bar flex-between">
+    <view class="flex items-center">
+      <view class="rank-num-sm">{{myRank.rank}}</view>
+      <image class="avatar-sm" src="{{myRank.avatarUrl}}" mode="aspectFill"/>
+      <text class="my-name">我</text>
+    </view>
+    <view class="flex items-center">
+      <text class="my-score">{{myRank.totalScore}} 分</text>
+      <text class="my-rate">正确率 {{myRank.rateText}}</text>
+    </view>
+  </view>
+
+  <!-- 排行榜 -->
+  <scroll-view scroll-y class="board-list">
+    <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+
+    <view wx:elif="{{leaderboard.length === 0}}" class="empty-state">
+      <view class="empty-icon">👥</view>
+      <view class="empty-text">暂无好友数据，邀请好友来竞猜！</view>
+    </view>
+
+    <block wx:else>
+      <!-- 前三名 -->
+      <view class="top3-row flex-center" wx:if="{{leaderboard.length >= 3}}">
+        <!-- 第2名 -->
+        <view class="top-item second">
+          <view class="medal">🥈</view>
+          <image class="avatar-top" src="{{leaderboard[1].avatarUrl}}" mode="aspectFill"/>
+          <view class="top-name">{{leaderboard[1].nickname}}</view>
+          <view class="top-score">{{leaderboard[1].totalScore}}</view>
+        </view>
+        <!-- 第1名 -->
+        <view class="top-item first">
+          <view class="medal">🥇</view>
+          <image class="avatar-top" src="{{leaderboard[0].avatarUrl}}" mode="aspectFill"/>
+          <view class="top-name">{{leaderboard[0].nickname}}</view>
+          <view class="top-score">{{leaderboard[0].totalScore}}</view>
+        </view>
+        <!-- 第3名 -->
+        <view class="top-item third">
+          <view class="medal">🥉</view>
+          <image class="avatar-top" src="{{leaderboard[2].avatarUrl}}" mode="aspectFill"/>
+          <view class="top-name">{{leaderboard[2].nickname}}</view>
+          <view class="top-score">{{leaderboard[2].totalScore}}</view>
+        </view>
+      </view>
+
+      <!-- 其余排名 -->
+      <view
+        wx:for="{{leaderboard}}"
+        wx:key="userId"
+        wx:if="{{index >= 3}}"
+        class="rank-row flex-between {{item.isMe ? 'is-me' : ''}}"
+      >
+        <view class="flex items-center">
+          <view class="rank-num">{{item.rank}}</view>
+          <image class="avatar-sm" src="{{item.avatarUrl}}" mode="aspectFill"/>
+          <view class="rank-info">
+            <view class="rank-name">{{item.nickname}}</view>
+            <view class="rank-rate">正确率 {{item.rateText}}</view>
+          </view>
+        </view>
+        <view class="rank-score">{{item.totalScore}} <text class="score-unit">分</text></view>
+      </view>
+    </block>
+  </scroll-view>
+
+</view>

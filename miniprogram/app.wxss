@@ -1,0 +1,135 @@
+/* 全局样式 */
+page {
+  background-color: #F5F6FA;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* 主题色变量 */
+.theme-green { color: #1a6b3a; }
+.theme-bg-green { background-color: #1a6b3a; }
+
+/* 卡片通用样式 */
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  margin: 20rpx 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background: #f0f0f0;
+  margin: 20rpx 0;
+}
+
+/* 按钮通用 */
+.btn-primary {
+  background: #1a6b3a;
+  color: #fff;
+  border-radius: 50rpx;
+  padding: 20rpx 60rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+}
+
+.btn-primary::after { border: none; }
+
+.btn-outline {
+  background: transparent;
+  color: #1a6b3a;
+  border: 2rpx solid #1a6b3a;
+  border-radius: 50rpx;
+  padding: 18rpx 60rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+  color: #999;
+}
+
+.empty-state .empty-icon { font-size: 80rpx; margin-bottom: 20rpx; }
+.empty-state .empty-text { font-size: 28rpx; }
+
+/* 头像 */
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #eee;
+}
+
+.avatar-sm {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+}
+
+/* 标签 */
+.tag {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+}
+
+.tag-green { background: #e6f4ec; color: #1a6b3a; }
+.tag-orange { background: #fff3e8; color: #f5a623; }
+.tag-gray { background: #f0f0f0; color: #999; }
+.tag-red { background: #fef0f0; color: #e74c3c; }
+
+/* 积分 badge */
+.score-badge {
+  background: linear-gradient(135deg, #f5a623, #f0832a);
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: bold;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+/* flex 工具类 */
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+.items-center { align-items: center; }
+
+/* 文字截断 */
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 页面标题 */
+.page-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #222;
+  padding: 24rpx 24rpx 0;
+}
+
+/* 加载中占位 */
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200rpx;
+  color: #ccc;
+  font-size: 26rpx;
+}

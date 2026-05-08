@@ -1,0 +1,67 @@
+.matches-container { min-height: 100vh; }
+
+/* 赛阶 Tab */
+.stage-tabs {
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  white-space: nowrap;
+}
+
+.stage-tabs-inner {
+  display: flex;
+  padding: 0 12rpx;
+}
+
+.stage-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 24rpx 24rpx;
+  font-size: 28rpx;
+  color: #666;
+  white-space: nowrap;
+  border-bottom: 4rpx solid transparent;
+}
+
+.stage-tab.active {
+  color: #1a6b3a;
+  border-bottom-color: #1a6b3a;
+  font-weight: 600;
+}
+
+/* 小组 Tab */
+.group-tabs {
+  background: #f8f9fa;
+  white-space: nowrap;
+}
+
+.group-tabs-inner {
+  display: flex;
+  padding: 12rpx 16rpx;
+  gap: 12rpx;
+}
+
+.group-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 28rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #fff;
+  border-radius: 30rpx;
+  border: 1rpx solid #e0e0e0;
+}
+
+.group-tab.active {
+  background: #1a6b3a;
+  color: #fff;
+  border-color: #1a6b3a;
+}
+
+/* 日期分组 */
+.date-label {
+  font-size: 26rpx;
+  color: #999;
+  padding: 16rpx 24rpx 8rpx;
+}
+
+.match-list { padding-bottom: 40rpx; }

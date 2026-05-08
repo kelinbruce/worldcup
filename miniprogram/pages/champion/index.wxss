@@ -1,0 +1,71 @@
+.champion-page { display: flex; flex-direction: column; height: 100vh; }
+
+/* Tab */
+.tab-bar { border-bottom: 1rpx solid #f0f0f0; background: #fff; }
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  border-bottom: 4rpx solid transparent;
+}
+.tab-item.active { color: #1a6b3a; border-bottom-color: #1a6b3a; font-weight: 600; }
+
+/* 已选 Banner */
+.my-pick-bar {
+  background: #e6f4ec;
+  padding: 16rpx 24rpx;
+  gap: 10rpx;
+}
+.pick-label { font-size: 26rpx; color: #666; }
+.pick-flag { font-size: 36rpx; }
+.pick-name { font-size: 26rpx; font-weight: 600; color: #1a6b3a; }
+.lock-badge { font-size: 22rpx; background: #c8e6c9; color: #388e3c; padding: 4rpx 12rpx; border-radius: 20rpx; }
+
+/* 球队列表 */
+.team-list { flex: 1; }
+.tip-text { font-size: 24rpx; color: #999; padding: 16rpx 24rpx; }
+.tip-text.locked { color: #f5a623; }
+
+.team-row {
+  padding: 20rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.team-row.selected { background: #e6f4ec; }
+.team-row.dim { opacity: 0.4; }
+
+.team-flag-md { font-size: 44rpx; margin-right: 16rpx; }
+.team-name-text { font-size: 28rpx; font-weight: 600; color: #222; }
+.team-conf { font-size: 22rpx; color: #aaa; margin-top: 4rpx; }
+.check-icon { font-size: 32rpx; color: #1a6b3a; font-weight: 700; }
+
+.submit-area { padding: 32rpx 24rpx; }
+.submit-area .btn-primary { width: 100%; }
+
+/* 好友预测 */
+.friends-list { flex: 1; }
+.friend-pick-row {
+  padding: 20rpx 24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.friend-pick-name { font-size: 28rpx; color: #333; margin-left: 12rpx; }
+.friend-flag { font-size: 36rpx; margin-right: 10rpx; }
+.friend-team { font-size: 26rpx; color: #555; }
+
+/* 统计 */
+.stats-list { flex: 1; padding: 16rpx 24rpx; }
+.stats-row { background: #fff; border-radius: 12rpx; padding: 20rpx; margin-bottom: 16rpx; }
+.stats-flag { font-size: 36rpx; margin-right: 12rpx; }
+.stats-name { font-size: 28rpx; font-weight: 600; }
+.stats-pct { font-size: 26rpx; color: #888; }
+.progress-bar {
+  height: 10rpx;
+  background: #f0f0f0;
+  border-radius: 5rpx;
+  overflow: hidden;
+}
+.progress-fill { height: 100%; background: linear-gradient(90deg, #1a6b3a, #2d9e5f); border-radius: 5rpx; }

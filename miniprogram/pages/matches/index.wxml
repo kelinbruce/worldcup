@@ -1,0 +1,57 @@
+<view class="matches-container">
+
+  <!-- 赛阶 Tab -->
+  <scroll-view scroll-x class="stage-tabs">
+    <view class="stage-tabs-inner">
+      <view
+        wx:for="{{stages}}"
+        wx:key="key"
+        class="stage-tab {{currentStage === index ? 'active' : ''}}"
+        data-idx="{{index}}"
+        bindtap="onStageChange"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- 小组赛子 Tab -->
+  <block wx:if="{{stages[currentStage].key === 'group'}}">
+    <scroll-view scroll-x class="group-tabs">
+      <view class="group-tabs-inner">
+        <view
+          wx:for="{{groupTabs}}"
+          wx:key="*this"
+          class="group-tab {{currentGroup === index ? 'active' : ''}}"
+          data-idx="{{index}}"
+          bindtap="onGroupChange"
+        >{{item}}组</view>
+      </view>
+    </scroll-view>
+  </block>
+
+  <!-- 比赛列表 -->
+  <view class="match-list">
+    <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+
+    <block wx:elif="{{matchGroups.length === 0}}">
+      <view class="empty-state">
+        <view class="empty-icon">📅</view>
+        <view class="empty-text">暂无赛程</view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view wx:for="{{matchGroups}}" wx:key="date" class="date-group">
+        <view class="date-label">{{item.date}}</view>
+        <match-card
+          wx:for="{{item.list}}"
+          wx:for-item="match"
+          wx:key="matchId"
+          match="{{match}}"
+          bindtap="goMatchDetail"
+          data-matchid="{{match.matchId}}"
+        />
+      </view>
+    </block>
+  </view>
+
+</view>

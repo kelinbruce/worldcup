@@ -1,0 +1,95 @@
+<view class="champion-page">
+
+  <!-- Tab 切换 -->
+  <view class="tab-bar flex">
+    <view class="tab-item {{activeTab === 'pick' ? 'active' : ''}}" data-tab="pick" bindtap="switchTab">选择冠军</view>
+    <view class="tab-item {{activeTab === 'friends' ? 'active' : ''}}" data-tab="friends" bindtap="switchTab">好友预测</view>
+    <view class="tab-item {{activeTab === 'stats' ? 'active' : ''}}" data-tab="stats" bindtap="switchTab">预测统计</view>
+  </view>
+
+  <!-- 已选状态提示 -->
+  <view wx:if="{{myPick}}" class="my-pick-bar flex items-center">
+    <text class="pick-label">我的预测：</text>
+    <text class="pick-flag">{{myPick.teamFlag}}</text>
+    <text class="pick-name">{{myPick.teamName}}</text>
+    <view class="lock-badge">🔒 已锁定</view>
+    <view class="score-badge">冠军正确 +200</view>
+  </view>
+
+  <!-- 选择冠军 Tab -->
+  <scroll-view scroll-y wx:if="{{activeTab === 'pick'}}" class="team-list">
+    <view class="tip-text" wx:if="{{!myPick}}">从48支参赛球队中选择你预测的冠军（提交后不可修改）</view>
+    <view class="tip-text locked" wx:else>已提交，不可修改</view>
+
+    <view
+      wx:for="{{teams}}"
+      wx:key="code"
+      class="team-row flex-between {{selectedCode === item.code ? 'selected' : ''}} {{myPick && myPick.teamCode !== item.code ? 'dim' : ''}}"
+      data-code="{{item.code}}"
+      bindtap="selectTeam"
+    >
+      <view class="flex items-center">
+        <text class="team-flag-md">{{item.flag}}</text>
+        <view>
+          <view class="team-name-text">{{item.name}}</view>
+          <view class="team-conf">{{item.confederation}}</view>
+        </view>
+      </view>
+      <view wx:if="{{selectedCode === item.code}}" class="check-icon">✓</view>
+    </view>
+
+    <view wx:if="{{!myPick}}" class="submit-area">
+      <button
+        class="btn-primary"
+        bindtap="submitChampionPick"
+        loading="{{submitting}}"
+        disabled="{{!selectedCode}}"
+      >确认提交冠军预测</button>
+    </view>
+  </scroll-view>
+
+  <!-- 好友预测 Tab -->
+  <scroll-view scroll-y wx:elif="{{activeTab === 'friends'}}" class="friends-list">
+    <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+    <view wx:elif="{{friendPicks.length === 0}}" class="empty-state">
+      <view class="empty-icon">👥</view>
+      <view class="empty-text">暂无好友预测数据</view>
+    </view>
+    <view
+      wx:else
+      wx:for="{{friendPicks}}"
+      wx:key="userId"
+      class="friend-pick-row flex-between"
+    >
+      <view class="flex items-center">
+        <image class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"/>
+        <text class="friend-pick-name">{{item.nickname}}</text>
+      </view>
+      <view class="flex items-center">
+        <text class="friend-flag">{{item.teamFlag}}</text>
+        <text class="friend-team">{{item.teamName}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 统计 Tab -->
+  <scroll-view scroll-y wx:elif="{{activeTab === 'stats'}}" class="stats-list">
+    <view wx:if="{{teamStats.length === 0}}" class="empty-state">
+      <view class="empty-icon">📊</view>
+      <view class="empty-text">暂无统计数据</view>
+    </view>
+    <view wx:else wx:for="{{teamStats}}" wx:key="code" class="stats-row">
+      <view class="flex-between items-center" style="margin-bottom:8rpx">
+        <view class="flex items-center">
+          <text class="stats-flag">{{item.flag}}</text>
+          <text class="stats-name">{{item.name}}</text>
+        </view>
+        <text class="stats-pct">{{item.percent}}% ({{item.count}}人)</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width:{{item.percent}}%"></view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>

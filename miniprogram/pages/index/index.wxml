@@ -1,0 +1,92 @@
+<scroll-view scroll-y class="page-container">
+
+  <!-- 顶部 Banner -->
+  <view class="hero-banner">
+    <view class="hero-title">⚽ 2026 世界杯竞猜</view>
+    <view class="hero-subtitle">球友竞猜 · 让预测成为社交</view>
+    <view class="countdown-row">
+      <text class="countdown-label">距开幕</text>
+      <text class="countdown-value">{{countdown}}</text>
+    </view>
+  </view>
+
+  <!-- 未登录状态 -->
+  <block wx:if="{{!isLoggedIn}}">
+    <view class="card login-card">
+      <view class="login-icon">🏆</view>
+      <view class="login-desc">登录后参与世界杯竞猜，和好友一起预测！</view>
+      <button class="btn-primary login-btn" bindtap="onLogin">微信一键登录</button>
+    </view>
+  </block>
+
+  <!-- 已登录 -->
+  <block wx:else>
+    <!-- 用户信息栏 -->
+    <view class="card user-bar flex-between">
+      <view class="flex items-center">
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
+        <view class="user-info-text">
+          <view class="user-name">{{userInfo.nickname || '球友'}}</view>
+          <view class="user-score">积分 <text class="score-num">{{userInfo.totalScore || 0}}</text></view>
+        </view>
+      </view>
+      <view class="user-stats flex">
+        <view class="stat-item">
+          <view class="stat-num">{{userInfo.totalPredictions || 0}}</view>
+          <view class="stat-label">预测</view>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <view class="stat-num">{{userInfo.correctPredictions || 0}}</view>
+          <view class="stat-label">正确</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 冠军预测入口 -->
+    <view class="card champion-card" bindtap="goChampion">
+      <view class="champion-header flex-between">
+        <view class="champion-title">🏆 冠军预测</view>
+        <view class="champion-arrow">></view>
+      </view>
+      <view wx:if="{{!championPick}}" class="champion-empty">
+        <view class="champion-empty-text">还没有预测冠军，点击选择你支持的球队</view>
+        <view class="champion-empty-hint">预测正确奖励 +200 积分</view>
+      </view>
+      <view wx:else class="champion-picked flex items-center">
+        <text class="champion-flag">{{championPick.flag}}</text>
+        <view class="champion-picked-info">
+          <view class="champion-team-name">{{championPick.name}}</view>
+          <view class="champion-lock">🔒 已锁定，赛后揭晓</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 今日赛程 -->
+    <view class="section-header flex-between">
+      <view class="section-title">今日赛程</view>
+      <view class="section-more" bindtap="goMatches">查看全部 ></view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+
+    <block wx:elif="{{todayMatches.length === 0}}">
+      <view class="empty-state">
+        <view class="empty-icon">📅</view>
+        <view class="empty-text">今日暂无比赛</view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <match-card
+        wx:for="{{todayMatches}}"
+        wx:key="matchId"
+        match="{{item}}"
+        bindtap="goMatchDetail"
+        data-matchid="{{item.matchId}}"
+      />
+    </block>
+
+  </block>
+
+</scroll-view>

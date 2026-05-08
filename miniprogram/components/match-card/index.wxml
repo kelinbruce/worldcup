@@ -1,0 +1,59 @@
+<view class="match-card" bindtap="onTap">
+  <view class="mc-header flex-between">
+    <text class="mc-stage">{{match.stageText}}</text>
+    <view class="mc-status tag {{match.status === 'upcoming' ? 'tag-green' : match.status === 'live' ? 'tag-orange' : 'tag-gray'}}">
+      {{match.status === 'live' ? '● 直播中' : match.statusText}}
+    </view>
+  </view>
+
+  <view class="mc-teams flex-between">
+    <!-- 主队 -->
+    <view class="mc-team home">
+      <view class="mc-flag">{{match.homeTeamInfo.flag}}</view>
+      <view class="mc-name">{{match.homeTeamInfo.name}}</view>
+    </view>
+
+    <!-- 比分/时间 -->
+    <view class="mc-score-block">
+      <block wx:if="{{match.status === 'upcoming'}}">
+        <view class="mc-time">{{match.timeText}}</view>
+        <view class="mc-vs">VS</view>
+      </block>
+      <block wx:elif="{{match.status === 'live'}}">
+        <view class="mc-live-score">{{match.homeScore}} : {{match.awayScore}}</view>
+      </block>
+      <block wx:else>
+        <view class="mc-final-score">{{match.homeScore}} : {{match.awayScore}}</view>
+      </block>
+    </view>
+
+    <!-- 客队 -->
+    <view class="mc-team away">
+      <view class="mc-flag">{{match.awayTeamInfo.flag}}</view>
+      <view class="mc-name">{{match.awayTeamInfo.name}}</view>
+    </view>
+  </view>
+
+  <!-- 我的预测 & 好友 -->
+  <view class="mc-footer flex-between">
+    <view wx:if="{{match.myPrediction}}" class="mc-my-prediction flex items-center">
+      <text class="mc-pred-label">我：</text>
+      <text class="mc-pred-result {{match.myPrediction.earnedScore > 0 ? 'correct' : ''}}">
+        {{match.myPrediction.resultText}}
+      </text>
+      <text wx:if="{{match.myPrediction.homeScore !== null}}" class="mc-pred-score">
+        ({{match.myPrediction.homeScore}}:{{match.myPrediction.awayScore}})
+      </text>
+      <text wx:if="{{match.status === 'finished' && match.myPrediction.earnedScore > 0}}" class="mc-earned">
+        +{{match.myPrediction.earnedScore}}分
+      </text>
+    </view>
+    <view wx:elif="{{match.predictable}}" class="mc-predict-btn">去预测</view>
+    <view wx:else class="mc-predict-btn dim">已截止</view>
+
+    <view wx:if="{{match.friendCount}}" class="mc-friends">
+      <text class="mc-friends-num">{{match.friendCount}}</text>
+      <text class="mc-friends-label">位好友已猜</text>
+    </view>
+  </view>
+</view>

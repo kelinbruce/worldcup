@@ -1,0 +1,236 @@
+<scroll-view scroll-y class="detail-page">
+
+  <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+
+  <block wx:elif="{{match}}">
+
+    <!-- 比赛头部 -->
+    <view class="match-header">
+      <view class="match-stage-time">
+        <text class="stage-text">{{match.stageText}}</text>
+        <text class="time-text">{{match.timeText}}</text>
+      </view>
+
+      <view class="teams-row">
+        <view class="team-block">
+          <view class="team-flag-big">{{match.homeTeamInfo.flag}}</view>
+          <view class="team-name-big">{{match.homeTeamInfo.name}}</view>
+        </view>
+
+        <view class="score-block">
+          <block wx:if="{{match.status === 'upcoming'}}">
+            <view class="vs-text">VS</view>
+            <view class="status-tag tag-green">{{match.statusText}}</view>
+          </block>
+          <block wx:elif="{{match.status === 'live'}}">
+            <view class="live-score">{{match.homeScore}} : {{match.awayScore}}</view>
+            <view class="live-badge">● 直播中</view>
+          </block>
+          <block wx:else>
+            <view class="final-score">{{match.homeScore}} : {{match.awayScore}}</view>
+            <view class="status-tag tag-gray">已结束</view>
+          </block>
+        </view>
+
+        <view class="team-block">
+          <view class="team-flag-big">{{match.awayTeamInfo.flag}}</view>
+          <view class="team-name-big">{{match.awayTeamInfo.name}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 我的预测区 -->
+    <view class="card prediction-card">
+      <view class="card-title">我的预测</view>
+
+      <!-- 比赛已结束：展示结果 -->
+      <block wx:if="{{match.status === 'finished'}}">
+        <block wx:if="{{myPrediction}}">
+          <view class="result-row flex-between">
+            <view>
+              <view class="predict-result-text">{{myPrediction.resultText}}</view>
+              <view wx:if="{{myPrediction.homeScore !== null}}" class="predict-score-text">
+                预测比分：{{myPrediction.homeScore}} : {{myPrediction.awayScore}}
+              </view>
+            </view>
+            <view class="earned-score {{myPrediction.earnedScore > 0 ? 'score-positive' : 'score-zero'}}">
+              +{{myPrediction.earnedScore}} 分
+            </view>
+          </view>
+        </block>
+        <view wx:else class="no-prediction-text">本场未参与预测</view>
+      </block>
+
+      <!-- 可预测状态 -->
+      <block wx:elif="{{match.predictable}}">
+        <view class="result-options">
+          <view
+            class="result-btn {{selectedResult === 'home_win' ? 'selected' : ''}}"
+            data-result="home_win"
+            bindtap="selectResult"
+          >
+            <view class="result-btn-flag">{{match.homeTeamInfo.flag}}</view>
+            <view class="result-btn-label">{{match.homeTeamInfo.name}}胜</view>
+          </view>
+          <view
+            class="result-btn {{selectedResult === 'draw' ? 'selected' : ''}}"
+            data-result="draw"
+            bindtap="selectResult"
+          >
+            <view class="result-btn-label">平局</view>
+          </view>
+          <view
+            class="result-btn {{selectedResult === 'away_win' ? 'selected' : ''}}"
+            data-result="away_win"
+            bindtap="selectResult"
+          >
+            <view class="result-btn-flag">{{match.awayTeamInfo.flag}}</view>
+            <view class="result-btn-label">{{match.awayTeamInfo.name}}胜</view>
+          </view>
+        </view>
+
+        <view class="score-input-row">
+          <text class="score-input-label">预测比分（选填，答对额外+20分）</text>
+          <view class="score-inputs flex items-center">
+            <input
+              class="score-input"
+              type="number"
+              placeholder="0"
+              value="{{homeScoreInput}}"
+              bindinput="onHomeScoreInput"
+              maxlength="2"
+            />
+            <text class="score-colon">:</text>
+            <input
+              class="score-input"
+              type="number"
+              placeholder="0"
+              value="{{awayScoreInput}}"
+              bindinput="onAwayScoreInput"
+              maxlength="2"
+            />
+          </view>
+        </view>
+
+        <button
+          class="btn-primary submit-btn"
+          bindtap="submitPrediction"
+          loading="{{submitting}}"
+        >
+          {{myPrediction ? '修改预测' : '提交预测'}}
+        </button>
+
+        <view wx:if="{{myPrediction}}" class="current-prediction-hint">
+          当前预测：{{myPrediction.resultText}}
+          <text wx:if="{{myPrediction.homeScore !== null}}"> | {{myPrediction.homeScore}}:{{myPrediction.awayScore}}</text>
+        </view>
+      </block>
+
+      <!-- 已截止（比赛进行中） -->
+      <block wx:else>
+        <block wx:if="{{myPrediction}}">
+          <view class="locked-prediction flex-between">
+            <view>
+              <view class="predict-result-text">{{myPrediction.resultText}}</view>
+              <view wx:if="{{myPrediction.homeScore !== null}}" class="predict-score-text">
+                预测比分：{{myPrediction.homeScore}} : {{myPrediction.awayScore}}
+              </view>
+            </view>
+            <view class="tag tag-orange">预测已锁定</view>
+          </view>
+        </block>
+        <view wx:else class="no-prediction-text">截止时间已过，未能参与预测</view>
+      </block>
+    </view>
+
+    <!-- 好友怎么猜的 -->
+    <view class="card friends-card">
+      <view class="card-title flex-between" bindtap="toggleFriends">
+        <text>好友怎么猜的</text>
+        <text class="toggle-arrow">{{showFriends ? '▲' : '▼'}}</text>
+      </view>
+
+      <block wx:if="{{showFriends}}">
+        <view wx:if="{{friendPredictions.length === 0}}" class="no-friends-text">暂无好友预测数据</view>
+
+        <block wx:else>
+          <view class="friend-stats">
+            <view class="stat-col">
+              <view class="stat-col-label">{{match.homeTeamInfo.name}}胜</view>
+              <view class="stat-col-bar">
+                <view class="bar-fill green" style="width:{{friendStatsPercent.home_win}}%"></view>
+              </view>
+              <view class="stat-col-pct">{{friendStatsPercent.home_win}}%</view>
+              <view class="avatar-group">
+                <image
+                  wx:for="{{friendStats.home_win}}"
+                  wx:key="userId"
+                  wx:if="{{index < 4}}"
+                  class="avatar-sm"
+                  src="{{item.avatarUrl}}"
+                  mode="aspectFill"
+                />
+                <view wx:if="{{friendStats.home_win.length > 4}}" class="avatar-more">+{{friendStats.home_win.length - 4}}</view>
+              </view>
+            </view>
+
+            <view class="stat-col">
+              <view class="stat-col-label">平局</view>
+              <view class="stat-col-bar">
+                <view class="bar-fill gray" style="width:{{friendStatsPercent.draw}}%"></view>
+              </view>
+              <view class="stat-col-pct">{{friendStatsPercent.draw}}%</view>
+              <view class="avatar-group">
+                <image
+                  wx:for="{{friendStats.draw}}"
+                  wx:key="userId"
+                  wx:if="{{index < 4}}"
+                  class="avatar-sm"
+                  src="{{item.avatarUrl}}"
+                  mode="aspectFill"
+                />
+              </view>
+            </view>
+
+            <view class="stat-col">
+              <view class="stat-col-label">{{match.awayTeamInfo.name}}胜</view>
+              <view class="stat-col-bar">
+                <view class="bar-fill orange" style="width:{{friendStatsPercent.away_win}}%"></view>
+              </view>
+              <view class="stat-col-pct">{{friendStatsPercent.away_win}}%</view>
+              <view class="avatar-group">
+                <image
+                  wx:for="{{friendStats.away_win}}"
+                  wx:key="userId"
+                  wx:if="{{index < 4}}"
+                  class="avatar-sm"
+                  src="{{item.avatarUrl}}"
+                  mode="aspectFill"
+                />
+              </view>
+            </view>
+          </view>
+
+          <!-- 好友列表 -->
+          <view class="friend-list">
+            <view wx:for="{{friendPredictions}}" wx:key="userId" class="friend-row flex-between">
+              <view class="flex items-center">
+                <image class="avatar-sm" src="{{item.avatarUrl}}" mode="aspectFill"/>
+                <text class="friend-name">{{item.nickname}}</text>
+              </view>
+              <view class="flex items-center">
+                <text class="friend-result">{{item.resultText}}</text>
+                <text wx:if="{{item.homeScore !== null}}" class="friend-score">{{item.homeScore}}:{{item.awayScore}}</text>
+                <text wx:if="{{match.status === 'finished'}}" class="friend-correct {{item.earnedScore > 0 ? 'correct' : 'wrong'}}">
+                  {{item.earnedScore > 0 ? '✓' : '✗'}}
+                </text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </block>
+    </view>
+
+  </block>
+
+</scroll-view>

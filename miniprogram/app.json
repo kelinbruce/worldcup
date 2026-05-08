@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/matches/index",
+    "pages/match-detail/index",
+    "pages/champion/index",
+    "pages/friends/index",
+    "pages/group/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "backgroundColor": "#F5F6FA",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a6b3a",
+    "navigationBarTitleText": "球友竞猜",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1a6b3a",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/matches/index",
+        "text": "竞猜",
+        "iconPath": "images/tab-match.png",
+        "selectedIconPath": "images/tab-match-active.png"
+      },
+      {
+        "pagePath": "pages/friends/index",
+        "text": "好友",
+        "iconPath": "images/tab-friends.png",
+        "selectedIconPath": "images/tab-friends-active.png"
+      },
+      {
+        "pagePath": "pages/group/index",
+        "text": "群组",
+        "iconPath": "images/tab-group.png",
+        "selectedIconPath": "images/tab-group-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "cloud": true,
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

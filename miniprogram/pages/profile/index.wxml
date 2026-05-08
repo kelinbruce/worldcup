@@ -1,0 +1,126 @@
+<view class="profile-page">
+
+  <!-- 未登录 -->
+  <block wx:if="{{!isLoggedIn}}">
+    <view class="card login-card" style="text-align:center;padding:60rpx">
+      <view style="font-size:80rpx;margin-bottom:20rpx">👤</view>
+      <view style="font-size:28rpx;color:#666;margin-bottom:30rpx">登录后查看个人战绩</view>
+      <button class="btn-primary" bindtap="onLogin">微信一键登录</button>
+    </view>
+  </block>
+
+  <!-- 已登录 -->
+  <block wx:else>
+    <!-- 个人信息头部 -->
+    <view class="profile-header">
+      <image class="avatar-large" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
+      <view class="profile-info">
+        <view class="profile-name">{{userInfo.nickname || '球友'}}</view>
+        <view wx:if="{{championTeam}}" class="champion-info">
+          支持 {{championTeam.flag}} {{championTeam.name}} 夺冠
+        </view>
+      </view>
+    </view>
+
+    <!-- 积分卡片 -->
+    <view class="card score-card flex">
+      <view class="score-main flex-1 flex-center flex-col">
+        <view class="score-big">{{stats.totalScore || 0}}</view>
+        <view class="score-label">总积分</view>
+      </view>
+      <view class="score-divider"></view>
+      <view class="score-stats flex-1">
+        <view class="score-stat-row flex-between">
+          <text class="ss-label">预测次数</text>
+          <text class="ss-value">{{stats.totalPredictions || 0}}</text>
+        </view>
+        <view class="score-stat-row flex-between">
+          <text class="ss-label">预测正确</text>
+          <text class="ss-value green">{{stats.correctPredictions || 0}}</text>
+        </view>
+        <view class="score-stat-row flex-between">
+          <text class="ss-label">正确率</text>
+          <text class="ss-value green">{{stats.correctRate || '0%'}}</text>
+        </view>
+        <view class="score-stat-row flex-between">
+          <text class="ss-label">比分完全正确</text>
+          <text class="ss-value orange">{{stats.exactScoreCount || 0}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Tab -->
+    <view class="tab-bar flex">
+      <view class="tab-item {{activeTab === 'stats' ? 'active' : ''}}" data-tab="stats" bindtap="switchTab">竞猜战绩</view>
+      <view class="tab-item {{activeTab === 'history' ? 'active' : ''}}" data-tab="history" bindtap="switchTab">历史记录</view>
+    </view>
+
+    <!-- 战绩图表 -->
+    <block wx:if="{{activeTab === 'stats'}}">
+      <view class="card">
+        <view class="card-title">积分构成</view>
+        <view class="score-breakdown">
+          <view class="sb-row flex-between">
+            <view>
+              <view class="sb-name">胜平负预测</view>
+              <view class="sb-desc">每场正确 +10 分</view>
+            </view>
+            <view class="sb-score">{{stats.resultScore || 0}} 分</view>
+          </view>
+          <view class="sb-row flex-between">
+            <view>
+              <view class="sb-name">比分完全正确</view>
+              <view class="sb-desc">每场完全正确 +30 分</view>
+            </view>
+            <view class="sb-score orange">{{stats.exactScore || 0}} 分</view>
+          </view>
+          <view class="sb-row flex-between">
+            <view>
+              <view class="sb-name">比分差一球</view>
+              <view class="sb-desc">每场差一球 +5 分</view>
+            </view>
+            <view class="sb-score orange">{{stats.nearScore || 0}} 分</view>
+          </view>
+          <view class="sb-row flex-between">
+            <view>
+              <view class="sb-name">冠军预测</view>
+              <view class="sb-desc">预测正确 +200 分</view>
+            </view>
+            <view class="sb-score gold">{{stats.championScore || 0}} 分</view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 历史记录 -->
+    <block wx:elif="{{activeTab === 'history'}}">
+      <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+      <view wx:elif="{{historyPredictions.length === 0}}" class="empty-state">
+        <view class="empty-icon">📋</view>
+        <view class="empty-text">暂无历史预测记录</view>
+      </view>
+      <view
+        wx:else
+        wx:for="{{historyPredictions}}"
+        wx:key="predictionId"
+        class="card history-row flex-between"
+        data-matchid="{{item.matchId}}"
+        bindtap="goMatchDetail"
+      >
+        <view>
+          <view class="history-teams">
+            {{item.match.homeTeamInfo.flag}} {{item.match.homeTeamInfo.name}}
+            vs
+            {{item.match.awayTeamInfo.flag}} {{item.match.awayTeamInfo.name}}
+          </view>
+          <view class="history-meta">{{item.match.timeText}} · {{item.resultText}}</view>
+          <view wx:if="{{item.homeScore !== null}}" class="history-meta">预测比分 {{item.homeScore}}:{{item.awayScore}}</view>
+        </view>
+        <view class="history-score {{item.earnedScore > 0 ? 'positive' : ''}}">
+          +{{item.earnedScore || 0}}
+        </view>
+      </view>
+    </block>
+  </block>
+
+</view>

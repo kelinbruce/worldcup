@@ -1,0 +1,127 @@
+<view class="group-page">
+
+  <!-- 群组列表视图 -->
+  <block wx:if="{{view === 'list'}}">
+    <view class="page-title">我的竞猜群</view>
+
+    <!-- 创建群组 -->
+    <view class="card create-card">
+      <view class="create-title">发起群组竞猜</view>
+      <view class="create-row flex items-center">
+        <input
+          class="group-name-input flex-1"
+          placeholder="输入群组名称（如：同事竞猜群）"
+          value="{{groupName}}"
+          bindinput="onGroupNameInput"
+          maxlength="20"
+        />
+        <button class="btn-primary create-btn" bindtap="createGroup" loading="{{creating}}">创建</button>
+      </view>
+      <view class="create-hint">创建后分享给微信群，群友点击自动加入</view>
+    </view>
+
+    <!-- 群组列表 -->
+    <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+
+    <view wx:elif="{{myGroups.length === 0}}" class="empty-state">
+      <view class="empty-icon">👥</view>
+      <view class="empty-text">还没有加入任何竞猜群</view>
+      <view class="empty-hint">创建群组或通过好友邀请加入</view>
+    </view>
+
+    <view
+      wx:else
+      wx:for="{{myGroups}}"
+      wx:key="groupId"
+      class="card group-card flex-between"
+      data-groupid="{{item.groupId}}"
+      bindtap="enterGroup"
+    >
+      <view>
+        <view class="group-name">{{item.name}}</view>
+        <view class="group-meta">{{item.memberCount}}人 · 整体正确率 {{item.totalCorrectRate}}%</view>
+      </view>
+      <view class="group-arrow">></view>
+    </view>
+  </block>
+
+  <!-- 群组详情视图 -->
+  <block wx:elif="{{view === 'detail' && currentGroup}}">
+    <view class="detail-header flex-between">
+      <view class="flex items-center">
+        <view class="back-btn" bindtap="backToList">‹ 返回</view>
+        <view class="group-detail-name">{{currentGroup.name}}</view>
+      </view>
+      <button class="share-btn" open-type="share">分享邀请</button>
+    </view>
+
+    <!-- 群整体成绩 -->
+    <view class="card stats-bar flex">
+      <view class="stats-item flex-1">
+        <view class="stats-num">{{currentGroup.memberCount}}</view>
+        <view class="stats-label">成员数</view>
+      </view>
+      <view class="stats-item flex-1">
+        <view class="stats-num green">{{currentGroup.totalCorrectRate}}%</view>
+        <view class="stats-label">整体正确率</view>
+      </view>
+      <view class="stats-item flex-1">
+        <view class="stats-num orange">{{currentGroup.totalMatches}}</view>
+        <view class="stats-label">预测场次</view>
+      </view>
+    </view>
+
+    <!-- 最近比赛预测分布 -->
+    <view wx:if="{{groupMatches.length > 0}}" class="card recent-matches">
+      <view class="card-title">最近比赛预测</view>
+      <view wx:for="{{groupMatches}}" wx:key="matchId" class="group-match-row">
+        <view class="group-match-info flex-between">
+          <text class="gm-teams">{{item.homeTeamInfo.flag}}{{item.homeTeamInfo.name}} vs {{item.awayTeamInfo.flag}}{{item.awayTeamInfo.name}}</text>
+          <text class="gm-status tag {{item.status === 'finished' ? 'tag-gray' : 'tag-green'}}">{{item.statusText}}</text>
+        </view>
+        <view class="gm-dist flex">
+          <view class="gm-dist-item green" style="flex:{{item.dist.home_win}}">
+            <text>主胜 {{item.dist.home_win}}人</text>
+          </view>
+          <view class="gm-dist-item gray" style="flex:{{item.dist.draw}}">
+            <text>平 {{item.dist.draw}}人</text>
+          </view>
+          <view class="gm-dist-item orange" style="flex:{{item.dist.away_win}}">
+            <text>客胜 {{item.dist.away_win}}人</text>
+          </view>
+        </view>
+        <view wx:if="{{item.status === 'finished'}}" class="gm-result">
+          本场群内正确率：<text class="correct-rate">{{item.groupCorrectRate}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 群排行榜 -->
+    <view class="card">
+      <view class="card-title">群排行榜</view>
+      <view wx:if="{{loading}}" class="loading-placeholder">加载中...</view>
+      <view
+        wx:else
+        wx:for="{{groupLeaderboard}}"
+        wx:key="userId"
+        class="rank-row flex-between {{item.isMe ? 'is-me' : ''}}"
+      >
+        <view class="flex items-center">
+          <view class="rank-badge {{item.rank <= 3 ? 'top' : ''}}">
+            <text wx:if="{{item.rank === 1}}">🥇</text>
+            <text wx:elif="{{item.rank === 2}}">🥈</text>
+            <text wx:elif="{{item.rank === 3}}">🥉</text>
+            <text wx:else>{{item.rank}}</text>
+          </view>
+          <image class="avatar-sm" src="{{item.avatarUrl}}" mode="aspectFill"/>
+          <view class="rank-info">
+            <view class="rank-name">{{item.nickname}}</view>
+            <view class="rank-rate">正确率 {{item.rateText}}</view>
+          </view>
+        </view>
+        <view class="rank-score">{{item.totalScore}} <text class="score-unit">分</text></view>
+      </view>
+    </view>
+  </block>
+
+</view>

@@ -1,0 +1,66 @@
+.page-container { height: 100vh; }
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #1a6b3a 0%, #2d9e5f 100%);
+  padding: 40rpx 32rpx 50rpx;
+  color: #fff;
+}
+
+.hero-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.hero-subtitle {
+  font-size: 26rpx;
+  opacity: 0.85;
+  margin-bottom: 24rpx;
+}
+
+.countdown-row {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  border-radius: 40rpx;
+  padding: 10rpx 24rpx;
+  display: inline-flex;
+}
+
+.countdown-label { font-size: 24rpx; opacity: 0.8; margin-right: 10rpx; }
+.countdown-value { font-size: 30rpx; font-weight: 700; }
+
+/* 登录卡片 */
+.login-card { text-align: center; margin-top: -30rpx; }
+.login-icon { font-size: 80rpx; margin-bottom: 16rpx; }
+.login-desc { font-size: 28rpx; color: #666; margin-bottom: 32rpx; }
+.login-btn { width: 80%; margin: 0 auto; }
+
+/* 用户信息栏 */
+.user-bar { margin-top: -30rpx; }
+.avatar { width: 80rpx; height: 80rpx; border-radius: 50%; margin-right: 16rpx; border: 3rpx solid #e6f4ec; }
+.user-name { font-size: 30rpx; font-weight: 600; color: #222; }
+.user-score { font-size: 24rpx; color: #888; margin-top: 6rpx; }
+.score-num { color: #f5a623; font-weight: 700; font-size: 26rpx; }
+.user-stats { gap: 20rpx; }
+.stat-item { text-align: center; }
+.stat-num { font-size: 32rpx; font-weight: 700; color: #1a6b3a; }
+.stat-label { font-size: 22rpx; color: #999; }
+.stat-divider { width: 1rpx; background: #eee; height: 40rpx; }
+
+/* 冠军预测卡片 */
+.champion-card { background: linear-gradient(135deg, #fff8e1, #fff); border: 2rpx solid #ffe082; }
+.champion-header { margin-bottom: 20rpx; }
+.champion-title { font-size: 30rpx; font-weight: 700; color: #333; }
+.champion-arrow { color: #ccc; font-size: 28rpx; }
+.champion-empty-text { font-size: 28rpx; color: #555; margin-bottom: 10rpx; }
+.champion-empty-hint { font-size: 24rpx; color: #f5a623; }
+.champion-flag { font-size: 64rpx; margin-right: 20rpx; }
+.champion-team-name { font-size: 32rpx; font-weight: 700; color: #222; }
+.champion-lock { font-size: 22rpx; color: #999; margin-top: 6rpx; }
+
+/* 今日赛程 */
+.section-header { padding: 20rpx 24rpx 8rpx; }
+.section-title { font-size: 30rpx; font-weight: 700; color: #222; }
+.section-more { font-size: 26rpx; color: #1a6b3a; }

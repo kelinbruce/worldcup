@@ -1,0 +1,62 @@
+.match-card {
+  background: #fff;
+  border-radius: 16rpx;
+  margin: 12rpx 24rpx;
+  padding: 20rpx 24rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.mc-header {
+  margin-bottom: 16rpx;
+}
+
+.mc-stage { font-size: 22rpx; color: #aaa; }
+
+/* 球队行 */
+.mc-teams { align-items: center; margin-bottom: 16rpx; }
+
+.mc-team {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mc-team.home { align-items: flex-start; }
+.mc-team.away { align-items: flex-end; }
+
+.mc-flag { font-size: 48rpx; }
+.mc-name { font-size: 24rpx; color: #333; font-weight: 600; margin-top: 6rpx; text-align: center; }
+
+/* 比分块 */
+.mc-score-block { text-align: center; min-width: 120rpx; }
+.mc-time { font-size: 22rpx; color: #aaa; }
+.mc-vs { font-size: 28rpx; font-weight: 700; color: #ccc; }
+.mc-live-score { font-size: 44rpx; font-weight: 700; color: #e74c3c; }
+.mc-final-score { font-size: 44rpx; font-weight: 700; color: #333; }
+
+/* 底部 */
+.mc-footer {
+  border-top: 1rpx solid #f5f5f5;
+  padding-top: 14rpx;
+}
+
+.mc-my-prediction { flex: 1; }
+.mc-pred-label { font-size: 22rpx; color: #aaa; }
+.mc-pred-result { font-size: 26rpx; color: #555; font-weight: 500; }
+.mc-pred-result.correct { color: #1a6b3a; }
+.mc-pred-score { font-size: 22rpx; color: #aaa; margin-left: 6rpx; }
+.mc-earned { font-size: 22rpx; color: #f5a623; font-weight: 700; margin-left: 6rpx; }
+
+.mc-predict-btn {
+  font-size: 24rpx;
+  color: #1a6b3a;
+  background: #e6f4ec;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-weight: 600;
+}
+.mc-predict-btn.dim { color: #ccc; background: #f5f5f5; }
+
+.mc-friends { font-size: 22rpx; color: #aaa; }
+.mc-friends-num { font-weight: 600; color: #888; }
