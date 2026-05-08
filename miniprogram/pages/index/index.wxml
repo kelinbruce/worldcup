@@ -1,4 +1,4 @@
-<scroll-view scroll-y class="page-container">
+<view class="page-container">
 
   <!-- 顶部 Banner -->
   <view class="hero-banner">
@@ -89,4 +89,4 @@
 
   </block>
 
-</scroll-view>
+</view>

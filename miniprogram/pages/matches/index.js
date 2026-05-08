@@ -10,7 +10,7 @@ const STAGES = [
   { key: 'final', label: '决赛' },
 ]
 
-const GROUP_TABS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+const GROUP_TABS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
 
 Page({
   data: {

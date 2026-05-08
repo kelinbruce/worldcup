@@ -34,7 +34,7 @@ Page({
 
   loadMyGroups() {
     this.setData({ loading: true })
-    return api.getPredictions({ type: 'myGroups' }).then(res => {
+    return api.getMyGroups().then(res => {
       this.setData({ myGroups: res.groups || [], loading: false })
     }).catch(() => this.setData({ loading: false }))
   },

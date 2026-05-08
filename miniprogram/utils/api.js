@@ -55,6 +55,11 @@ function joinGroup(groupId) {
   return callCloud('createGroup', { action: 'join', groupId })
 }
 
+// 获取我加入的群组
+function getMyGroups() {
+  return callCloud('getPredictions', { type: 'myGroups' })
+}
+
 // 获取个人战绩
 function getMyStats() {
   return callCloud('getPredictions', { type: 'myStats' })
@@ -72,5 +77,6 @@ module.exports = {
   createGroup,
   getGroupInfo,
   joinGroup,
+  getMyGroups,
   getMyStats,
 }
