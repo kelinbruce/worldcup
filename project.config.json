@@ -4,6 +4,8 @@
   "description": "球友竞猜 - 世界杯竞猜小程序",
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "cloudbaseRoot": "cloudfunctions/",
   "setting": {
     "urlCheck": true,
     "es6": true,
