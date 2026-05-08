@@ -80,18 +80,18 @@
       <view class="empty-text">暂无统计数据</view>
     </view>
     <block wx:else>
-    <view wx:for="{{teamStats}}" wx:key="code" class="stats-row">
-      <view class="flex-between items-center" style="margin-bottom:8rpx">
-        <view class="flex items-center">
-          <text class="stats-flag">{{item.flag}}</text>
-          <text class="stats-name">{{item.name}}</text>
+      <view wx:for="{{teamStats}}" wx:key="code" class="stats-row">
+        <view class="flex-between items-center" style="margin-bottom:8rpx">
+          <view class="flex items-center">
+            <text class="stats-flag">{{item.flag}}</text>
+            <text class="stats-name">{{item.name}}</text>
+          </view>
+          <text class="stats-pct">{{item.percent}}% ({{item.count}}人)</text>
         </view>
-        <text class="stats-pct">{{item.percent}}% ({{item.count}}人)</text>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width:{{item.percent}}%"></view>
+        </view>
       </view>
-      <view class="progress-bar">
-        <view class="progress-fill" style="width:{{item.percent}}%"></view>
-      </view>
-    </view>
     </block>
   </scroll-view>
 
